@@ -1,18 +1,20 @@
-#include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
+#include <ArduinoBLE.h>
+#include <LSM6DS3.h>
+#include <Wire.h>
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // Initialize the serial communication at 9600 baud rate
+  Serial.begin(9600); 
+
+  // Wait for the serial monitor to open
+  while (!Serial);  // Optional, useful for some boards like Leonardo
+  
+  // Print a message to the serial monitor
+  Serial.println("Hello, PlatformIO!");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // Keep printing a message every second
+  Serial.println("Looping...");
+  delay(1000);  // Delay for 1 second
 }
