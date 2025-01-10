@@ -176,3 +176,6 @@ cython_debug/
 .clang_complete
 .gcc-flags.json
 .pio
+
+# vscode
+.vscode
