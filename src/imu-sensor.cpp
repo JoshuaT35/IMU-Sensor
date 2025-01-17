@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+#include <LSM6DS3.h>
+#include <Wire.h>
+#include "imu-sensor.h"
+
+// declare extern variables runtime
+LSM6DS3 myIMU(I2C_MODE, 0x6A);    //I2C device address 0x6A
+// (default is 2.5)
+float accelerationThreshold = 2.5;
+// (default is 0)
+float aX = 0;
+float aY = 0;
+float aZ = 0;
+float gX = 0;
+float gY = 0;
+float gZ = 0;
+
+// set accelerationThreshold
+void setAccelerationThreshold(float at) {
+    if (at <= 0) {
+        // return error
+        std::cerr << "setAccelerationThreshold error: invalid number.\n";
+        return;
+    }
+    accelerationThreshold = at;
+    return;
+};
