@@ -41,8 +41,6 @@ void setup() {
 
     // start advertising
     BLE.advertise();
-
-    Serial.println("BLE LED Peripheral");
 }
 
 void loop() {
@@ -79,6 +77,20 @@ void loop() {
         switch_characteristic_gyro_x.writeValue(gX);
         switch_characteristic_gyro_y.writeValue(gY);
         switch_characteristic_gyro_z.writeValue(gZ);
+
+        // debug: print the data
+        Serial.print(aX, 3);
+        Serial.print(',');
+        Serial.print(aY, 3);
+        Serial.print(',');
+        Serial.print(aZ, 3);
+        Serial.print(',');
+        Serial.print(gX, 3);
+        Serial.print(',');
+        Serial.print(gY, 3);
+        Serial.print(',');
+        Serial.print(gZ, 3);
+        Serial.println();
     }
 
         // when the central disconnects, print it out:
