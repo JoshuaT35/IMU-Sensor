@@ -6,17 +6,30 @@
 #include <unordered_map>
 #include <ArduinoBLE.h>
 
+// --- UUIDS ---
+
+// 1 for led service
+#define LED_SERVICE_UUID "19B10000-E8F2-537E-4F6C-D104768A1214"
+
+// 6 for IMU data
+// note: number of switch characteristics must match number created
+#define SWITCH_CHARACTERISTIC_NUM 6
+#define SWITCH_CHARACTERISTIC_ACCEL_X_UUID "19B10010-E8F2-537E-4F6C-D104768A1214"
+#define SWITCH_CHARACTERISTIC_ACCEL_Y_UUID "19B10020-E8F2-537E-4F6C-D104768A1214"
+#define SWITCH_CHARACTERISTIC_ACCEL_Z_UUID "19B10030-E8F2-537E-4F6C-D104768A1214"
+#define SWITCH_CHARACTERISTIC_GYRO_X_UUID "19B10040-E8F2-537E-4F6C-D104768A1214"
+#define SWITCH_CHARACTERISTIC_GYRO_Y_UUID "19B10050-E8F2-537E-4F6C-D104768A1214"
+#define SWITCH_CHARACTERISTIC_GYRO_Z_UUID "19B10060-E8F2-537E-4F6C-D104768A1214"
+
 // bluetooth ledService ()
-extern BLEService ledService;
+extern BLEService led_service;
 
-// switchCharacteristics (identify by uuid)
-extern std::unordered_map<std::string, BLEByteCharacteristic> switchCharacteristics;
-
-// given an integer, generate that many switchCharacteristics
-// with both read and write (need both? Might not since IMU will only send data, not receive)
-void createSwitchCharacteristics(int numSC);
-
-// generate a random uuid
-std::string generateUUID();
+// switchCharacteristics
+extern BLEByteCharacteristic switch_characteristic_accel_x;
+extern BLEByteCharacteristic switch_characteristic_accel_y;
+extern BLEByteCharacteristic switch_characteristic_accel_z;
+extern BLEByteCharacteristic switch_characteristic_gyro_x;
+extern BLEByteCharacteristic switch_characteristic_gyro_y;
+extern BLEByteCharacteristic switch_characteristic_gyro_z;
 
 #endif

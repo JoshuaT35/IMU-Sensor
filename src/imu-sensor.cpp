@@ -4,7 +4,8 @@
 #include "imu-sensor.h"
 
 // declare extern variables runtime
-LSM6DS3 myIMU(I2C_MODE, 0x6A);    //I2C device address 0x6A
+// - I2C device address 0x6A
+LSM6DS3 myIMU(I2C_MODE, 0x6A);
 // (default is 2.5)
 float accelerationThreshold = 2.5;
 // (default is 0)
@@ -25,3 +26,15 @@ void setAccelerationThreshold(float at) {
     accelerationThreshold = at;
     return;
 };
+
+// returns 0 if significant motion detected, else 1
+int significantMotionDetected() {
+    // sum up the absolutes
+    float aSum = fabs(aX) + fabs(aY) + fabs(aZ);
+
+    // check if it's above the threshold
+    if (aSum >= accelerationThreshold) {
+        return 0;
+    }
+    return 1;
+}

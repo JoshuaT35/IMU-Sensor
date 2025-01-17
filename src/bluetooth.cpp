@@ -1,67 +1,15 @@
-#include <random>
-#include <bits/stdc++.h>
+#include <string>
 #include "bluetooth.h"
 
-// extern variables
-BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1214"); // Bluetooth® Low Energy LED Service
-std::unordered_map<std::string, BLEByteCharacteristic> switchCharacteristics;
+// led service
+// - Bluetooth® Low Energy LED Service
+BLEService led_service(LED_SERVICE_UUID);
 
-// given an integer, generate that many switchCharacteristics
-// with both read and write (need both? Might not since IMU will only send data, not receive)
-void createSwitchCharacteristics(int numSC) {
-    // error check if integer is not positive
-    if (numSC <= 0) {
-        // return error
-        std::cerr << "createSwitchCharacteristics error: invalid number.\n";
-        return;
-    }
-
-    // for each switchCharacteristics
-    for (int i = 0; i < numSC; i++) {
-        // generate a UUID
-        // NOTE: error check
-        std::string uuid = generateUUID();
-
-        // create a switch characteristic
-        BLEByteCharacteristic switchCharacteristic(uuid.c_str(), BLERead | BLEWrite);
-
-        // store switch characteristic
-        switchCharacteristics.insert(
-            {uuid, switchCharacteristic}
-        );
-    }
-
-    return;
-}
-
-// NOTE: change
-std::string generateUUID() {
-    // Hexadecimal characters
-    const char hexChars[] = "0123456789abcdef";
-
-    // Random number generator
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 15); // For hex characters
-    std::uniform_int_distribution<> disVariant(8, 11); // For variant
-
-    // UUID format: xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx
-    std::string uuid;
-    uuid = "xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx";
-
-    do {
-        // UUID format: xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx
-        uuid = "xxxxxxxx-xxxx-4xxx-Nxxx-xxxxxxxxxxxx";
-
-        // Replace 'x' with random hex characters
-        for (char& ch : uuid) {
-            if (ch == 'x') {
-                ch = hexChars[dis(gen)];
-            } else if (ch == 'N') {
-                ch = hexChars[disVariant(gen)];
-            }
-        }
-    } while (switchCharacteristics.find(uuid) == switchCharacteristics.end());
-
-    return uuid;
-}
+// switch characteristics (read or write? they are to be read from)
+// - Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
+BLEByteCharacteristic switch_characteristic_accel_x(SWITCH_CHARACTERISTIC_ACCEL_X_UUID, BLERead | BLEWrite);
+BLEByteCharacteristic switch_characteristic_accel_y(SWITCH_CHARACTERISTIC_ACCEL_Y_UUID, BLERead | BLEWrite);
+BLEByteCharacteristic switch_characteristic_accel_z(SWITCH_CHARACTERISTIC_ACCEL_Z_UUID, BLERead | BLEWrite);
+BLEByteCharacteristic switch_characteristic_gyro_x(SWITCH_CHARACTERISTIC_GYRO_X_UUID, BLERead | BLEWrite);
+BLEByteCharacteristic switch_characteristic_gyro_y(SWITCH_CHARACTERISTIC_GYRO_Y_UUID, BLERead | BLEWrite);
+BLEByteCharacteristic switch_characteristic_gyro_z(SWITCH_CHARACTERISTIC_GYRO_Z_UUID, BLERead | BLEWrite);
