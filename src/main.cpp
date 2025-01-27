@@ -6,6 +6,8 @@
 #include "imu-sensor.h"
 
 void setup() {
+    setAccelerationThreshold(2.5);
+
     Serial.begin(9600);
     while (!Serial);
 
@@ -61,6 +63,7 @@ void loop() {
         aZ = myIMU.readFloatAccelZ();
 
         // if motion is not significant, return
+        // NOTE: must be called only after reading accelerometer data
         if (!significantMotionDetected()) {
             return;
         }
