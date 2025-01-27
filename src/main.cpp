@@ -19,7 +19,7 @@ void setup() {
     }
 
     // set advertised local name and service UUID:
-    BLE.setLocalName("LED");
+    BLE.setLocalName(IMU_NAME);
     BLE.setAdvertisedService(led_service);
 
     // add the characteristic to the service
