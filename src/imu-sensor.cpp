@@ -27,14 +27,14 @@ void setAccelerationThreshold(float at) {
     return;
 };
 
-// returns 0 if significant motion detected, else 1
+// returns 1 (True) if significant motion detected, else 0 (False)
 int significantMotionDetected() {
     // sum up the absolutes
     float aSum = fabs(aX) + fabs(aY) + fabs(aZ);
-
+    
     // check if it's above the threshold
     if (aSum >= accelerationThreshold) {
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
