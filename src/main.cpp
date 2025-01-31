@@ -44,6 +44,7 @@ void setup() {
 }
 
 void loop() {
+    Serial.print("loop is running\n");
     // listen for Bluetooth® Low Energy peripherals to connect:
     BLEDevice central = BLE.central();
 
