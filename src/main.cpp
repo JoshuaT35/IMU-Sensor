@@ -7,12 +7,11 @@
 #include "imu-sensor.h"
 
 void setup() {
-    setAccelerationThreshold(2.5);
 
     Serial.begin(9600);
     while (!Serial);
 
-    // begin initialization
+    // begin initialization of bluetooth
     delay(1000);
     if (!BLE.begin()) {
         Serial.println("starting Bluetooth® Low Energy module failed!");
@@ -46,6 +45,16 @@ void setup() {
     // start advertising
     BLE.advertise();
     Serial.print("Advertising\n");
+
+    // begin initialization of IMU
+    if (myIMU.begin() != 0) {
+        Serial.println("Device error");
+    }
+    else {
+        Serial.println("aX,aY,aZ,gX,gY,gZ");
+    }
+    // set the acceleration threshold
+    setAccelerationThreshold(2.5);
 }
 
 void loop() {
