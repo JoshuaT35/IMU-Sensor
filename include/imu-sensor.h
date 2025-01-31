@@ -4,6 +4,9 @@
 #include <LSM6DS3.h>
 #include <Wire.h>
 
+// name of imu
+#define IMU_NAME "Imu-Sensor"
+
 // NOTE: use IMU class?
 
 // imu

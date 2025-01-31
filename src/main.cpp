@@ -6,6 +6,8 @@
 #include "imu-sensor.h"
 
 void setup() {
+    setAccelerationThreshold(2.5);
+
     Serial.begin(9600);
     while (!Serial);
 
@@ -17,7 +19,7 @@ void setup() {
     }
 
     // set advertised local name and service UUID:
-    BLE.setLocalName("LED");
+    BLE.setLocalName(IMU_NAME);
     BLE.setAdvertisedService(led_service);
 
     // add the characteristic to the service
@@ -62,6 +64,7 @@ void loop() {
         aZ = myIMU.readFloatAccelZ();
 
         // if motion is not significant, return
+        // NOTE: must be called only after reading accelerometer data
         if (!significantMotionDetected()) {
             return;
         }
