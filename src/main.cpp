@@ -1,6 +1,7 @@
 #include <ArduinoBLE.h>
 #include <LSM6DS3.h>
 #include <Wire.h>
+#include <Arduino.h>
 
 #include "bluetooth.h"
 #include "imu-sensor.h"
@@ -8,12 +9,12 @@
 unsigned long previousTime = 0; // Store the last timestamp
 
 void setup() {
-    setAccelerationThreshold(2.5);
 
     Serial.begin(9600);
     while (!Serial);
 
-    // begin initialization
+    // begin initialization of bluetooth
+    delay(1000);
     if (!BLE.begin()) {
         Serial.println("starting Bluetooth® Low Energy module failed!");
 
@@ -47,6 +48,17 @@ void setup() {
 
     // start advertising
     BLE.advertise();
+    Serial.print("Advertising\n");
+
+    // begin initialization of IMU
+    if (myIMU.begin() != 0) {
+        Serial.println("Device error");
+    }
+    else {
+        Serial.println("aX,aY,aZ,gX,gY,gZ");
+    }
+    // set the acceleration threshold
+    setAccelerationThreshold(2.5);
 }
 
 void loop() {
