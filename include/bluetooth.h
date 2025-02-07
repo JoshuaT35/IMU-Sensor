@@ -26,12 +26,12 @@
 extern BLEService led_service;
 
 // switchCharacteristics
-extern BLEByteCharacteristic switch_characteristic_accel_x;
-extern BLEByteCharacteristic switch_characteristic_accel_y;
-extern BLEByteCharacteristic switch_characteristic_accel_z;
-extern BLEByteCharacteristic switch_characteristic_gyro_x;
-extern BLEByteCharacteristic switch_characteristic_gyro_y;
-extern BLEByteCharacteristic switch_characteristic_gyro_z;
-extern BLEByteCharacteristic switch_characteristic_time;
+extern BLEFloatCharacteristic switch_characteristic_accel_x;
+extern BLEFloatCharacteristic switch_characteristic_accel_y;
+extern BLEFloatCharacteristic switch_characteristic_accel_z;
+extern BLEFloatCharacteristic switch_characteristic_gyro_x;
+extern BLEFloatCharacteristic switch_characteristic_gyro_y;
+extern BLEFloatCharacteristic switch_characteristic_gyro_z;
+extern BLEUnsignedLongCharacteristic switch_characteristic_time;
 
 #endif
