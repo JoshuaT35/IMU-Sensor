@@ -19,8 +19,8 @@
 #define SWITCH_CHARACTERISTIC_GYRO_X_UUID "19B10040-E8F2-537E-4F6C-D104768A1214"
 #define SWITCH_CHARACTERISTIC_GYRO_Y_UUID "19B10050-E8F2-537E-4F6C-D104768A1214"
 #define SWITCH_CHARACTERISTIC_GYRO_Z_UUID "19B10060-E8F2-537E-4F6C-D104768A1214"
-// 1 for time between readings
-#define SWITCH_CHARACTERISTIC_TIME_UUID "19B10070-E8F2-537E-4F6C-D104768A1214"
+// 1 for time of current reading
+#define SWITCH_CHARACTERISTIC_CURRENT_TIME_UUID "19B10070-E8F2-537E-4F6C-D104768A1214"
 
 // bluetooth ledService ()
 extern BLEService led_service;
@@ -32,6 +32,6 @@ extern BLEFloatCharacteristic switch_characteristic_accel_z;
 extern BLEFloatCharacteristic switch_characteristic_gyro_x;
 extern BLEFloatCharacteristic switch_characteristic_gyro_y;
 extern BLEFloatCharacteristic switch_characteristic_gyro_z;
-extern BLEUnsignedLongCharacteristic switch_characteristic_time;
+extern BLEUnsignedLongCharacteristic switch_characteristic_current_time;
 
 #endif
