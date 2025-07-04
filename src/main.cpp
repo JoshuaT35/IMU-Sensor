@@ -90,6 +90,14 @@ void loop() {
         // gY = myIMU.readFloatGyroY();
         // gZ = myIMU.readFloatGyroZ();
 
+        // debug: print data
+        // Serial.print(aX);
+        // Serial.print(" ");
+        // Serial.print(aY);
+        // Serial.print(" ");
+        // Serial.print(aZ);
+        // Serial.println();
+
         // write the data to the corresponding switch characteristic
 
         // uses: int writeValue(const void* value, int length, bool withResponse = true);
