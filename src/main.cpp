@@ -9,7 +9,7 @@
 unsigned long currentTime;
 unsigned long previousTime;
 // sample time (ms)
-unsigned long sampleInterval = 100;
+const unsigned long sampleInterval = 100;
 
 void setup() {
     Serial.begin(9600);
@@ -80,15 +80,15 @@ void loop() {
         // otherwise, read data and update
         previousTime = currentTime;
         
-        // read accelerometer data
+        // read accelerometer data (units: g)
         aX = myIMU.readFloatAccelX();
         aY = myIMU.readFloatAccelY();
         aZ = myIMU.readFloatAccelZ();
 
-        // read gyroscope data
-        // gX = myIMU.readFloatGyroX();
-        // gY = myIMU.readFloatGyroY();
-        // gZ = myIMU.readFloatGyroZ();
+        // read gyroscope data (units: degrees/s)
+        gX = myIMU.readFloatGyroX();
+        gY = myIMU.readFloatGyroY();
+        gZ = myIMU.readFloatGyroZ();
 
         // debug: print data
         // Serial.print(aX);
@@ -104,9 +104,9 @@ void loop() {
         switch_characteristic_accel_x.writeValue(aX);
         switch_characteristic_accel_y.writeValue(aY);
         switch_characteristic_accel_z.writeValue(aZ);
-        // switch_characteristic_gyro_x.writeValue(gX);
-        // switch_characteristic_gyro_y.writeValue(gY);
-        // switch_characteristic_gyro_z.writeValue(gZ);
+        switch_characteristic_gyro_x.writeValue(gX);
+        switch_characteristic_gyro_y.writeValue(gY);
+        switch_characteristic_gyro_z.writeValue(gZ);
 
         // uses: int writeValue(uint32_t value, bool withResponse = true);
         switch_characteristic_current_time.writeValue(currentTime);   // in (ms)
