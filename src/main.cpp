@@ -5,6 +5,7 @@
 
 #include "bluetooth.h"
 #include "imu-sensor.h"
+#include "led-control.h"
 
 unsigned long currentTime;
 unsigned long previousTime;
@@ -35,12 +36,18 @@ void loop() {
     while (central.connected()) {
         // --- Low Power Mode, transmit NULL data ---
         if (getPowerMode() == MODE_LOW) {
+            // turn on red light
+            pinRedOnly();
+
             // write nothing
             setBLEValuesToNull();
             continue;
         }
         // --- High Power Mode, read data ---
         else if (getPowerMode() == MODE_HIGH) {
+            // turn on blue light
+            pinBlueOnly();
+
             // get current time in milliseconds
             currentTime = millis();
 
@@ -65,4 +72,7 @@ void loop() {
 
     // de-initialize BLE
     deinitBLE();
+
+    // turn of all pins
+    allPinsOff();
 }
