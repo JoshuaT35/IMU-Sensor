@@ -16,4 +16,4 @@ void pinGreenOnly();
 // turn off all pins
 void allPinsOff();
 
-#endif LED_CONTROL_H
+#endif
