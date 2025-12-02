@@ -22,4 +22,9 @@ void setAccelerationThreshold(float at);
 // returns 0 if significant motion detected, else 1
 int significantMotionDetected();
 
+// imu functions
+bool initIMU();
+void readAccelerationIMU();
+void readGyroscopeIMU();
+
 #endif

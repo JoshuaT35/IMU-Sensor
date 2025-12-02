@@ -38,3 +38,28 @@ int significantMotionDetected() {
     }
     return 0;
 }
+
+// imu functions
+bool initIMU() {
+    if (myIMU.begin() != 0) {
+        Serial.println("IMU Device error");
+        return false;
+    } else {
+        Serial.println("IMU initialized");
+        return true;
+    }
+}
+
+void readAccelerationIMU() {
+    // read accelerometer data (units: g)
+    aX = myIMU.readFloatAccelX();
+    aY = myIMU.readFloatAccelY();
+    aZ = myIMU.readFloatAccelZ();
+}
+
+void readGyroscopeIMU() {
+    // read gyroscope data (units: degrees/s)
+    gX = myIMU.readFloatGyroX();
+    gY = myIMU.readFloatGyroY();
+    gZ = myIMU.readFloatGyroZ();
+}
