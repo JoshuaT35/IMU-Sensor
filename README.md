@@ -12,10 +12,10 @@ Note that
 - Structured for easy extension into BLE, sensor fusion, and real-time data processing applications  
 
 ## 📁 Project Structure
-- 'main.cpp': The main code to be run.
-- 'bluetooth.h', 'bluetooth.cpp': Code to enable and run Bluetooth Low Energy (BLE) on the board. Also contains the switch characteristics.
-- 'imu-sensor.h', 'imu-sensor.cpp': Code to control the IMU sensor of the board.
-- 'led-control.h', 'led-control.cpp': Code to cotnol the LEDs of the board.
+- <code>main.cpp</code>: The main code to be run.
+- <code>bluetooth.h</code>, <code>bluetooth.cpp</code>: Code to enable and run Bluetooth Low Energy (BLE) on the board. Also contains the switch characteristics.
+- <code>imu-sensor.h</code>, <code>imu-sensor.cpp</code>: Code to control the IMU sensor of the board.
+- <code>led-control.h</code>, <code>led-control.cpp</code>: Code to cotnol the LEDs of the board.
 
 ## 📝 Notes
 - If the following error is encountered:
