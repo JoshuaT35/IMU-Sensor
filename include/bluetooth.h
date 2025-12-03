@@ -23,14 +23,14 @@
 #define SWITCH_CHARACTERISTIC_GYRO_Y_UUID "734c0d37-c4fc-4265-953f-0aa24d28b1a5"
 #define SWITCH_CHARACTERISTIC_GYRO_Z_UUID "e51f3e60-3fdd-4591-9910-87362247c68d"
 
+// 1 for time between readings
+#define SWITCH_CHARACTERISTIC_CURRENT_TIME_UUID "72d913bb-e8df-44b8-b8ec-4f098978e0be"
+
 // --- Power Modes available in BLE ---
 enum PowerMode : uint8_t {
     MODE_LOW = 0,
     MODE_HIGH = 1,
 };
-
-// 1 for time between readings
-#define SWITCH_CHARACTERISTIC_CURRENT_TIME_UUID "72d913bb-e8df-44b8-b8ec-4f098978e0be"
 
 // bluetooth ledService ()
 extern BLEService led_service;
@@ -51,6 +51,9 @@ extern BLEUnsignedLongCharacteristic switch_characteristic_current_time;
 bool initBLE();
 BLEDevice waitForCentral();
 bool deinitBLE();
+
+// update time
+void switchCharWriteTime(unsigned long value);
 
 // update accelerometer and gyroscope switch characteristics
 // with the most current values when this is called

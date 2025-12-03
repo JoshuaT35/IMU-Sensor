@@ -7,10 +7,11 @@
 #include "imu-sensor.h"
 #include "led-control.h"
 
-unsigned long currentTime;
-unsigned long previousTime;
-// sample time (ms)
-const unsigned long sampleInterval = 100;
+// // update time
+// unsigned long currentTime;
+// unsigned long previousTime = 0;
+// // sample time (ms)
+// const unsigned long sampleInterval = 100;
 
 void setup() {
     Serial.begin(9600);
@@ -34,30 +35,31 @@ void loop() {
 
     // while the central is still connected to peripheral:
     while (central.connected()) {
+
+        // --- track time ---
+        // get current time in milliseconds
+        // currentTime = millis();
+
+        // // if less than `sampleInterval` milliseconds has passed, do not read
+        // if (currentTime - previousTime < sampleInterval) {
+        //     continue;
+        // }
+        
+        // // otherwise, read data and update
+        // previousTime = currentTime;
+        
         // --- Low Power Mode, transmit NULL data ---
         if (getPowerMode() == MODE_LOW) {
             // turn on red light
             pinRedOnly();
 
-            // write nothing
+            // NULL accel and gyro data
             setBLEValuesToNull();
-            continue;
         }
         // --- High Power Mode, read data ---
         else if (getPowerMode() == MODE_HIGH) {
             // turn on blue light
             pinBlueOnly();
-
-            // get current time in milliseconds
-            currentTime = millis();
-
-            // if less than `sampleInterval` milliseconds has passed, do not read
-            if (currentTime - previousTime < sampleInterval) {
-                continue;
-            }
-            
-            // otherwise, read data and update
-            previousTime = currentTime;
             
             // read accelerometer data (units: g)
             readAccelerationIMU();
@@ -65,14 +67,17 @@ void loop() {
             // read gyroscope data (units: degrees/s)
             readGyroscopeIMU();
 
-            // write the data to the corresponding switch characteristic
+            // write the data to the corresponding switch characteristics
             updateBLEValues();
         }
+
+        // write the time
+        switchCharWriteTime(millis());
     }
 
+    // NOTE: put a check so that these don't run EVERY loop
     // de-initialize BLE
     deinitBLE();
-
     // turn of all pins
     allPinsOff();
 }

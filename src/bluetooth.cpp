@@ -69,6 +69,12 @@ bool deinitBLE() {
     return true;
 }
 
+// update time
+void switchCharWriteTime(unsigned long value) {
+    // uses: int writeValue(uint32_t value, bool withResponse = true);
+    switch_characteristic_current_time.writeValue(value);
+}
+
 // write the IMU data to the corresponding switch characteristic
 void updateBLEValues() {
     // uses: int writeValue(const void* value, int length, bool withResponse = true);
@@ -86,9 +92,6 @@ void updateBLEValues() {
     // Serial.print(" ");
     // Serial.print(aZ);
     // Serial.println();
-
-    // uses: int writeValue(uint32_t value, bool withResponse = true);
-    switch_characteristic_current_time.writeValue(millis());
 }
 
 void setBLEValuesToNull() {
