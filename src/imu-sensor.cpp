@@ -42,10 +42,10 @@ int significantMotionDetected() {
 // imu functions
 bool initIMU() {
     if (myIMU.begin() != 0) {
-        Serial.println("IMU Device error");
+        // Serial.println("IMU Device error");
         return false;
     } else {
-        Serial.println("IMU initialized");
+        // Serial.println("IMU initialized");
         return true;
     }
 }

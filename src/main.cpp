@@ -14,8 +14,8 @@
 // const unsigned long sampleInterval = 100;
 
 void setup() {
-    Serial.begin(9600);
-    while (!Serial);
+    // Serial.begin(9600);
+    // while (!Serial);
 
     delay(1000);
 
@@ -51,7 +51,7 @@ void loop() {
         // --- Low Power Mode, transmit NULL data ---
         if (getPowerMode() == MODE_LOW) {
             // turn on red light
-            pinRedOnly();
+            // pinRedOnly();
 
             // NULL accel and gyro data
             setBLEValuesToNull();
@@ -59,7 +59,7 @@ void loop() {
         // --- High Power Mode, read data ---
         else if (getPowerMode() == MODE_HIGH) {
             // turn on blue light
-            pinBlueOnly();
+            // pinBlueOnly();
             
             // read accelerometer data (units: g)
             readAccelerationIMU();
@@ -79,5 +79,5 @@ void loop() {
     // de-initialize BLE
     deinitBLE();
     // turn of all pins
-    allPinsOff();
+    // allPinsOff();
 }

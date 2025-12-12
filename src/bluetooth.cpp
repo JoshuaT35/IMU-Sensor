@@ -22,7 +22,7 @@ BLEUnsignedLongCharacteristic switch_characteristic_current_time(SWITCH_CHARACTE
 
 bool initBLE() {
     if (!BLE.begin()) {
-        Serial.println("Starting Bluetooth® Low Energy module failed!");
+        // Serial.println("Starting Bluetooth® Low Energy module failed!");
         return false;
     }
 
@@ -50,7 +50,7 @@ bool initBLE() {
     switch_characteristic_current_time.writeValue(0);
 
     BLE.advertise();
-    Serial.println("Advertising");
+    // Serial.println("Advertising");
 
     // enter low power mode
     setPowerMode(MODE_LOW);
