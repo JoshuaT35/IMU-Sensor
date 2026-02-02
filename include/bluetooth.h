@@ -4,7 +4,8 @@
 // include
 #include <string>
 #include <unordered_map>
-#include <ArduinoBLE.h>
+#include <Arduino.h>
+#include <bluefruit.h>
 
 // --- UUIDS ---
 
@@ -36,20 +37,19 @@ enum PowerMode : uint8_t {
 extern BLEService led_service;
 
 // switch characteristic to identify IMU power mode
-extern BLEUnsignedCharCharacteristic switch_characteristic_imu_mode;
+extern BLECharacteristic switch_characteristic_imu_mode;
 
 // switchCharacteristics
-extern BLEFloatCharacteristic switch_characteristic_accel_x;
-extern BLEFloatCharacteristic switch_characteristic_accel_y;
-extern BLEFloatCharacteristic switch_characteristic_accel_z;
-extern BLEFloatCharacteristic switch_characteristic_gyro_x;
-extern BLEFloatCharacteristic switch_characteristic_gyro_y;
-extern BLEFloatCharacteristic switch_characteristic_gyro_z;
-extern BLEUnsignedLongCharacteristic switch_characteristic_current_time;
+extern BLECharacteristic switch_characteristic_accel_x;
+extern BLECharacteristic switch_characteristic_accel_y;
+extern BLECharacteristic switch_characteristic_accel_z;
+extern BLECharacteristic switch_characteristic_gyro_x;
+extern BLECharacteristic switch_characteristic_gyro_y;
+extern BLECharacteristic switch_characteristic_gyro_z;
+extern BLECharacteristic switch_characteristic_current_time;
 
 // initialize/deinitialize the BLE
 bool initBLE();
-BLEDevice waitForCentral();
 bool deinitBLE();
 
 // update time
