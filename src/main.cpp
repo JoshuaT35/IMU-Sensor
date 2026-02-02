@@ -28,7 +28,7 @@ void setup() {
 void loop() {        
     // --- Low Power Mode, transmit NULL data ---
     if (getPowerMode() == MODE_LOW) {
-        // turn on red light
+        // TO REMOVE: turn on red light
         pinRedOnly();
 
         // NULL accel and gyro data
@@ -36,7 +36,7 @@ void loop() {
     }
     // --- High Power Mode, read data ---
     else if (getPowerMode() == MODE_HIGH) {
-        // turn on blue light
+        // TO REMOVE: turn on blue light
         pinBlueOnly();
         
         // read accelerometer data (units: g)
@@ -53,6 +53,6 @@ void loop() {
     switchCharWriteTime(millis());
 
     // NOTE: put a check so that these don't run EVERY loop
-    // turn of all pins
-    // allPinsOff();
+    // TO REMOVE: turn of all pins
+    allPinsOff();
 }
