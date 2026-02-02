@@ -54,5 +54,5 @@ void loop() {
 
     // NOTE: put a check so that these don't run EVERY loop
     // turn of all pins
-    allPinsOff();
+    // allPinsOff();
 }
