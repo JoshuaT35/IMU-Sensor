@@ -8,7 +8,7 @@ BLEService led_service(LED_SERVICE_UUID);
 // low power mode
 BLECharacteristic switch_characteristic_power_mode(
     SWITCH_CHARACTERISTIC_POWER_MODE_UUID,
-    CHR_PROPS_READ | CHR_PROPS_WRITE,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_WRITE),
     SECMODE_OPEN,
     SECMODE_OPEN
 );
@@ -17,49 +17,49 @@ BLECharacteristic switch_characteristic_power_mode(
 // - Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLECharacteristic switch_characteristic_accel_x(
     SWITCH_CHARACTERISTIC_ACCEL_X_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_accel_y(
     SWITCH_CHARACTERISTIC_ACCEL_Y_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_accel_z(
     SWITCH_CHARACTERISTIC_ACCEL_Z_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_gyro_x(
     SWITCH_CHARACTERISTIC_GYRO_X_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_gyro_y(
     SWITCH_CHARACTERISTIC_GYRO_Y_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_gyro_z(
     SWITCH_CHARACTERISTIC_GYRO_Z_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
 
 BLECharacteristic switch_characteristic_current_time(
     SWITCH_CHARACTERISTIC_CURRENT_TIME_UUID,
-    CHR_PROPS_READ | CHR_PROPS_NOTIFY,
+    static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_NOTIFY),
     SECMODE_OPEN,
     SECMODE_NO_ACCESS
 );
@@ -88,7 +88,7 @@ bool initBLE() {
     float zero_f = 0.0f;
     uint32_t zero_u32 = 0;
 
-    switch_characteristic_power_mode.write(&zero_u8, sizeof(zero_u8));
+    setPowerMode(MODE_LOW);
     switch_characteristic_accel_x.write(&zero_f, sizeof(zero_f));
     switch_characteristic_accel_y.write(&zero_f, sizeof(zero_f));
     switch_characteristic_accel_z.write(&zero_f, sizeof(zero_f));
