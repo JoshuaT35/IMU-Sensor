@@ -12,8 +12,9 @@
 // const unsigned long sampleInterval = 100;
 
 void setup() {
-    // TO REMOVE: initialize pins
+    // TO REMOVE: initialize serial, pins
     initLEDs();
+    Serial.begin(9600);
 
     // begin initialization of bluetooth
     if (!initBLE()) while (1);
@@ -51,6 +52,9 @@ void loop() {
 
     // write the time
     switchCharWriteTime(millis());
+
+    // if in high-power mode but have been disconnected past limit
+    checkConnectionTimeout();
 
     // NOTE: put a check so that these don't run EVERY loop
     // TO REMOVE: turn of all pins

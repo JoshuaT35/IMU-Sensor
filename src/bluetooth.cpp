@@ -5,7 +5,7 @@
 // - Bluetooth® Low Energy LED Service
 BLEService led_service(LED_SERVICE_UUID);
 
-// low power mode
+// low power mode switch characteristic
 BLECharacteristic switch_characteristic_power_mode(
     SWITCH_CHARACTERISTIC_POWER_MODE_UUID,
     static_cast<uint8_t>(CHR_PROPS_READ | CHR_PROPS_WRITE),
@@ -64,6 +64,9 @@ BLECharacteristic switch_characteristic_current_time(
     SECMODE_NO_ACCESS
 );
 
+// keep track of how long we have been disconnected
+static uint32_t lastConnectedTime = 0;
+
 // --- functions ---
 bool initBLE() {
     Bluefruit.begin();
@@ -81,6 +84,11 @@ bool initBLE() {
     switch_characteristic_gyro_y.begin();
     switch_characteristic_gyro_z.begin();
     switch_characteristic_current_time.begin();
+
+    // set callbacks
+    Bluefruit.Periph.setConnectCallback(connectCallback);
+    Bluefruit.Periph.setDisconnectCallback(disconnectCallback);
+    switch_characteristic_power_mode.setWriteCallback(powerModeWriteCallback);
 
     // Initialize characteristics to 0
     // Initialize characteristics to 0
@@ -114,6 +122,50 @@ bool deinitBLE() {
     return true;
 }
 
+// callbacks
+void connectCallback(uint16_t conn_hdl) {
+    // Record the moment we became connected
+    lastConnectedTime = millis();
+}
+
+void disconnectCallback(uint16_t conn_hdl, uint8_t reason) {
+    // Mark time of disconnect, but do NOT immediately force low power
+    lastConnectedTime = millis();
+}
+
+void powerModeWriteCallback(
+    uint16_t conn_hdl,
+    BLECharacteristic* chr,
+    uint8_t* data,
+    uint16_t len
+) {
+    if (len != 1) return;
+
+    PowerMode mode = static_cast<PowerMode>(data[0]);
+
+    setPowerMode(mode);
+}
+
+void checkConnectionTimeout() {
+    // Only act if we are currently in HIGH power mode
+    if (getPowerMode() != MODE_HIGH) {
+        return;
+    }
+
+    // If no central is connected
+    if (!Bluefruit.Periph.connected()) {
+        uint32_t now = millis();
+
+        // If disconnected for more than 10 seconds
+        if (now - lastConnectedTime >= BLE_IDLE_TIMEOUT_MS) {
+            setPowerMode(MODE_LOW);
+
+            // Optional but recommended: resume advertising
+            Bluefruit.Advertising.start();
+        }
+    }
+}
+
 // update time
 void switchCharWriteTime(unsigned long value) {
     switch_characteristic_current_time.notify(&value, sizeof(value));
@@ -130,12 +182,12 @@ void updateBLEValues() {
     switch_characteristic_gyro_z.notify(&gZ, sizeof(gZ));
 
     // debug: print data
-    // Serial.print(aX);
-    // Serial.print(" ");
-    // Serial.print(aY);
-    // Serial.print(" ");
-    // Serial.print(aZ);
-    // Serial.println();
+    Serial.print(aX);
+    Serial.print(" ");
+    Serial.print(aY);
+    Serial.print(" ");
+    Serial.print(aZ);
+    Serial.println();
 }
 
 void setBLEValuesToNull() {

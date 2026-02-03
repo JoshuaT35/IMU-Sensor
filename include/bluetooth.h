@@ -27,6 +27,9 @@
 // 1 for time between readings
 #define SWITCH_CHARACTERISTIC_CURRENT_TIME_UUID "72d913bb-e8df-44b8-b8ec-4f098978e0be"
 
+// --- timeout variable (milliseconds)
+#define BLE_IDLE_TIMEOUT_MS 10000
+
 // --- Power Modes available in BLE ---
 enum PowerMode : uint8_t {
     MODE_LOW = 0,
@@ -47,6 +50,21 @@ extern BLECharacteristic switch_characteristic_gyro_x;
 extern BLECharacteristic switch_characteristic_gyro_y;
 extern BLECharacteristic switch_characteristic_gyro_z;
 extern BLECharacteristic switch_characteristic_current_time;
+
+// callback to handle connection/disconnection
+void connectCallback(uint16_t conn_hdl);
+
+void disconnectCallback(uint16_t conn_hdl, uint8_t reason);
+
+// writing back to power mode
+void powerModeWriteCallback(
+    uint16_t conn_hdl,
+    BLECharacteristic* chr,
+    uint8_t* data,
+    uint16_t len
+);
+
+void checkConnectionTimeout();
 
 // initialize/deinitialize the BLE
 bool initBLE();
