@@ -72,6 +72,12 @@ bool initBLE() {
     Bluefruit.begin();
     Bluefruit.setName(IMU_NAME);
 
+    // Reduce BLE power usage
+    Bluefruit.Advertising.setInterval(160, 320); // 100–200 ms
+    Bluefruit.Periph.setConnInterval(40, 80); // ~50–100 ms
+    Bluefruit.setTxPower(-8);                 // lower TX power (dBm)
+    // Bluefruit.autoConnLed(false);           // disable the default LED indicator
+
     // begin BLE service
     led_service.begin();
 
@@ -131,6 +137,8 @@ void connectCallback(uint16_t conn_hdl) {
 void disconnectCallback(uint16_t conn_hdl, uint8_t reason) {
     // Mark time of disconnect, but do NOT immediately force low power
     lastConnectedTime = millis();
+    // Stop BLE advertising to save power
+    Bluefruit.Advertising.stop();
 }
 
 void powerModeWriteCallback(
@@ -182,12 +190,12 @@ void updateBLEValues() {
     switch_characteristic_gyro_z.notify(&gZ, sizeof(gZ));
 
     // debug: print data
-    Serial.print(aX);
-    Serial.print(" ");
-    Serial.print(aY);
-    Serial.print(" ");
-    Serial.print(aZ);
-    Serial.println();
+    // Serial.print(aX);
+    // Serial.print(" ");
+    // Serial.print(aY);
+    // Serial.print(" ");
+    // Serial.print(aZ);
+    // Serial.println();
 }
 
 void setBLEValuesToNull() {

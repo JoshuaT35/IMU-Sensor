@@ -32,22 +32,33 @@ void loop() {
         // TO REMOVE: turn on red light
         pinRedOnly();
 
+        // Reduce Power usage
+        Bluefruit.setTxPower(-8); // reduce BLE transmit power
+        Bluefruit.Advertising.setInterval(1000, 2000); // 1–2 seconds
+
         // NULL accel and gyro data
-        setBLEValuesToNull();
+        if (Bluefruit.Periph.connected() && switch_characteristic_accel_x.notifyEnabled()) {
+            setBLEValuesToNull();
+        }
     }
+
     // --- High Power Mode, read data ---
-    else if (getPowerMode() == MODE_HIGH) {
+    if (getPowerMode() == MODE_HIGH) {
         // TO REMOVE: turn on blue light
         pinBlueOnly();
-        
-        // read accelerometer data (units: g)
-        readAccelerationIMU();
 
-        // read gyroscope data (units: degrees/s)
-        readGyroscopeIMU();
+        // Increase Power usage
+        Bluefruit.setTxPower(4); // full power for reliable high-speed streaming
 
-        // write the data to the corresponding switch characteristics
-        updateBLEValues();
+        // Only stream if connected AND notifications are enabled
+        if (Bluefruit.Periph.connected() && switch_characteristic_accel_x.notifyEnabled()) {
+            // read accelerometer data (units: g)
+            readAccelerationIMU();
+            // read gyroscope data (units: degrees/s)
+            readGyroscopeIMU();
+            // write the data to the corresponding switch characteristics
+            updateBLEValues();
+        }
     }
 
     // write the time
